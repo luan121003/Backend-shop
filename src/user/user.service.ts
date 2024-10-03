@@ -10,12 +10,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserService {
   constructor(private readonly repository: UserRepository) {}
 
-  create(user: CreateUserDto) {
+  async create(user: CreateUserDto) {
     user.password = bcrypt.hashSync(user.password, 10);
     try {
-      return this.repository.create(user);
+      return await this.repository.create(user);
     } catch (error) {
-      throw new NotFoundException('Email da ton tai')
+      throw new NotFoundException('Email da ton tai');
     }
   }
 
@@ -62,10 +62,10 @@ export class UserService {
   }
 
   async updateStatusUser(id: string, status: boolean) {
-    try {
-      return await this.repository.updateStatusUser(id, status);
-    } catch (error) {
-      throw new NotFoundException('Không tìm thấy user');
+    const user = await this.repository.updateStatusUser(id, status);
+    if (!user) {
+      throw new NotFoundException('khong tim thay user');
+      return user;
     }
   }
 }

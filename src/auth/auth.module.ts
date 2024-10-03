@@ -1,7 +1,6 @@
 import { Module } from "@nestjs/common";
 import { AuthController } from "./auth.controller";
 import { AuthService} from './auth.service' ;
-import { AuthGuard } from '@nestjs/passport';
 import { JwtModule } from "@nestjs/jwt";
 import { JwtStrategy } from "./strategy/iwt.strategy";
 import { UserModule } from "src/user/user.module";
@@ -21,4 +20,3 @@ import { UserModule } from "src/user/user.module";
     providers: [AuthService,JwtStrategy],
 })
 export class AuthModule {}
-export class JwtAuthGuard extends AuthGuard('jwt') {}
